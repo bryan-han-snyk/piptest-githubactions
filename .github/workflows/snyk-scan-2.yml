@@ -1,11 +1,11 @@
-name: Snyk Python Poetry Scan
+name: Snyk Security Gate
 on:
  push:
   branches: [ main ]
  pull_request:
 
 jobs:
- security:
+ snyk-test:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout code
@@ -16,15 +16,16 @@ jobs:
      with:
       python-version: '3.9'
 
-   - name: Install Poetry
+   - name: Install Dependencies
      run: |
       pip install poetry
       poetry config virtualenvs.create false
       poetry install
 
-   - name: Run Snyk to check for vulnerabilities
+   - name: Run Snyk Test
      uses: snyk/actions/python@master
      env:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
      with:
-      command: monitor
+      command: test
+      args: --severity-threshold=high
