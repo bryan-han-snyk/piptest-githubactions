@@ -1,20 +1,7 @@
-name: Snyk Python Scan
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-
+name: Test Me
+on: [push, pull_request]
 jobs:
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
-          # Note: The Snyk Python action handles pip/poetry automatically 
-          # if it finds pyproject.toml or requirements.txt
+  test:
+   runs-on: ubuntu-latest
+   steps:
+      - run: echo "If you see this, Actions is working!"
